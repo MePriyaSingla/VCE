@@ -70,9 +70,14 @@ include "../connection.php";
                 </a>
             </ul>
         </section>
-        <main class="main__content" style="text-align: center;">
-            <h1>Welcome to Admin Panel</h1>
-            <img src="../img/admin-panel.png" alt="Admin Panel">
+        <main class="main__content">
+            <?php
+            $dq = "DELETE FROM `user_table` WHERE `user_id` = '" . $_GET['uid'] . "'";
+            $dr = mysqli_query($con, $dq);
+            if ($dr) {
+                header('location:users.php');
+            }
+            ?>
         </main>
     </div>
 </body>

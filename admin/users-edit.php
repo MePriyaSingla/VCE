@@ -72,42 +72,58 @@ include "../connection.php";
         </section>
         <main class="main__content">
             <div class="login-container-2">
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" class="login__form">
-                    <h3 class="heading-3">Create user</h3>
+                <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post"
+                    class="login__form">
+                    <h3 class="heading-3">Edit user</h3>
+                    <?php
+                    $eq = "SELECT * FROM `user_table` WHERE `user_id` = '" . $_GET['uid'] . "'";
+                    $er = mysqli_query($con, $eq);
+                    if (mysqli_num_rows($er) > 0) {
+                        while ($erow = mysqli_fetch_array($er)) {
+                    ?>
                     <div class="input">
                         <label class="label__text">First Name:</label>
-                        <input type="text" class="input__box" name="user_fname" id="f_name" required>
+                        <input type="text" value="<?php echo $erow['user_firstname']; ?>" class="input__box"
+                            name="user_fname" id="f_name" required>
                     </div>
                     <div class="input">
                         <label class="label__text">Last Name:</label>
-                        <input type="text" class="input__box" name="user_lname" id="l_name" required>
+                        <input type="text" value="<?php echo $erow['user_lastname']; ?>" class="input__box"
+                            name="user_lname" id="l_name" required>
                     </div>
                     <div class="input">
                         <label class="label__text">Email:</label>
-                        <input type="email" class="input__box" name="user_mail" id="email" required>
+                        <input type="email" value="<?php echo $erow['user_email']; ?>" class="input__box"
+                            name="user_mail" id="email" required>
                     </div>
                     <div class="input">
                         <label class="label__text">Phone:</label>
-                        <input type="text" class="input__box" name="user_phone" id="phone" required>
+                        <input type="text" value="<?php echo $erow['user_phone']; ?>" class="input__box"
+                            name="user_phone" id="phone" required>
                     </div>
                     <div class="input">
                         <label class="label__text">Password:</label>
-                        <input type="password" class="input__box" name="user_pass" id="password" required>
+                        <input type="text" value="<?php echo $erow['user_password']; ?>" class="input__box"
+                            name="user_pass" id="password" required>
                     </div>
                     <div class="input">
                         <label class="label__text">User Type:</label>
                         <select name="user_type" class="input__box" id="utype" required>
-                            <option disabled selected hidden>Select</option>
+                            <option value="<?php echo $erow['user_type']; ?>"><?php echo $erow['user_type']; ?></option>
                             <option value="Student">Student</option>
                             <option value="Industrialist">Industrialist</option>
                         </select>
                     </div>
                     <div class="input input__btn">
-                        <input type="submit" value="Create" class="btn" name="create_user">
+                        <input type="submit" value="Update" class="btn" name="edit_user">
                     </div>
+                    <?php
+                        }
+                    }
+                    ?>
                 </form>
                 <?php
-                if (isset($_POST['create_user'])) {
+                if (isset($_POST['edit_user'])) {
                     $userFname = mysqli_real_escape_string($con, $_POST['user_fname']);
                     $userLname = mysqli_real_escape_string($con, $_POST['user_lname']);
                     $userMail = mysqli_real_escape_string($con, $_POST['user_mail']);
@@ -115,65 +131,15 @@ include "../connection.php";
                     $userPassword = mysqli_real_escape_string($con, $_POST['user_pass']);
                     $userType = mysqli_real_escape_string($con, $_POST['user_type']);
 
-                    $sin = "INSERT INTO `user_table` (`user_firstname`, `user_lastname`, `user_type`, `user_email`, `user_phone`, `user_password`) VALUES ('$userFname', '$userLname', '$userType', '$userMail', '$userPhone', '$userPassword')";
+                    $sin = "UPDATE `user_table` SET `user_firstname` = '$userFname', `user_lastname` = '$userLname', `user_type` = '$userType', `user_email` = '$userMail', `user_phone` = '$userPhone', `user_password` = '$userPassword' WHERE `user_id` = '" . $_GET['uid'] . "'";
                     $run = mysqli_query($con, $sin);
                     if ($run) {
-                        echo '<p class="form_success_msg"><b>Created Successfully</b></p>';
+                        echo ("<p style='margin-top:2rem;font-size:1.8rem;'>Updated Successfully</p>");
                     } else {
-                        echo '<p class="form_error_msg"><b>Opps! Not Created</b></p>';
+                        echo ("<script>location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>");
                     }
                 }
                 ?>
-            </div>
-
-            <div class="view__container">
-                <h3 class="heading-3">View users</h3>
-                <div class="table__container">
-                    <table class="table">
-                        <thead>
-                            <th>Sr. No.</th>
-                            <th>User ID</th>
-                            <th>Name</th>
-                            <th>Email</th>
-                            <th>Phone</th>
-                            <th>Type</th>
-                            <th>Created On</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $q1 = "Select * from user_table";
-                            $r1 = mysqli_query($con, $q1);
-                            $count = 1;
-                            while ($row1 = mysqli_fetch_array($r1)) { ?>
-                            <tr>
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row1['user_id']; ?></td>
-                                <td><?php echo $row1['user_firstname'] . ' ' . $row1['user_lastname']; ?></td>
-                                <td><?php echo $row1['user_email']; ?></td>
-                                <td><?php echo $row1['user_phone']; ?></td>
-                                <td><?php echo $row1['user_type']; ?></td>
-                                <td><?php echo $row1['user_createdon']; ?></td>
-                                <td style="text-align: center;font-size:1.8rem;">
-                                    <a href="users-edit.php?uid=<?php echo $row1['user_id']; ?>">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </td>
-                                <td style="text-align: center;font-size:1.8rem;">
-                                    <a onclick="return confirm('Are you sure you want to delete this item?');"
-                                        href="users-delete.php?uid=<?php echo $row1['user_id']; ?>">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                                $count++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </main>
     </div>

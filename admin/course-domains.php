@@ -82,9 +82,9 @@ include "../connection.php";
                             $q = "Select * from course_field";
                             $r = mysqli_query($con, $q);
                             while ($row = mysqli_fetch_array($r)) { ?>
-                            <option value="<?php echo $row['field_name']; ?>">
-                                <?php echo $row['field_name']; ?>
-                            </option>
+                                <option value="<?php echo $row['field_name']; ?>">
+                                    <?php echo $row['field_name']; ?>
+                                </option>
                             <?php
                             }
                             ?>
@@ -124,6 +124,8 @@ include "../connection.php";
                             <th>Field Name</th>
                             <th>Domain Name</th>
                             <th>Added On</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </thead>
                         <tbody>
                             <?php
@@ -131,13 +133,23 @@ include "../connection.php";
                             $r1 = mysqli_query($con, $q1);
                             $count = 1;
                             while ($row1 = mysqli_fetch_array($r1)) { ?>
-                            <tr>
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row1['domain_id']; ?></td>
-                                <td><?php echo $row1['domain_field']; ?></td>
-                                <td><?php echo $row1['domain_name']; ?></td>
-                                <td><?php echo $row1['added_on']; ?></td>
-                            </tr>
+                                <tr>
+                                    <td><?php echo $count; ?></td>
+                                    <td><?php echo $row1['domain_id']; ?></td>
+                                    <td><?php echo $row1['domain_field']; ?></td>
+                                    <td><?php echo $row1['domain_name']; ?></td>
+                                    <td><?php echo $row1['added_on']; ?></td>
+                                    <td style="text-align: center;font-size:1.8rem;">
+                                        <a href="course-domains-edit.php?did=<?php echo $row1['domain_id']; ?>">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </td>
+                                    <td style="text-align: center;font-size:1.8rem;">
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" href="course-domains-delete.php?did=<?php echo $row1['domain_id']; ?>">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
+                                </tr>
                             <?php
                                 $count++;
                             }

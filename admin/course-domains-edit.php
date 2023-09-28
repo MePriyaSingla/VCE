@@ -13,7 +13,7 @@ include "../connection.php";
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="css/style.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css">
-    <title>Course Fields - Admin Dashboard</title>
+    <title>Course Domains - Admin Dashboard</title>
 </head>
 
 <body>
@@ -72,73 +72,58 @@ include "../connection.php";
         </section>
         <main class="main__content">
             <div class="login-container-2">
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" class="login__form">
-                    <h3 class="heading-3">Add Course Field</h3>
-                    <div class="input">
-                        <label class="label__text">Field Name:</label>
-                        <input type="text" class="input__box" name="f_name" required>
-                    </div>
+                <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post" class="login__form">
+                    <h3 class="heading-3">Edit Course Domain</h3>
+                    <?php
+                    $sq = "SELECT * FROM `course_domain` WHERE `domain_id` = '" . $_GET['did'] . "'";
+                    $sr = mysqli_query($con, $sq);
+                    if (mysqli_num_rows($sr) > 0) {
+                        while ($srow = mysqli_fetch_array($sr)) {
+                    ?>
+                            <div class="input">
+                                <label class="label__text">Choose Field:</label>
+                                <select name="f_name" class="input__box" required>
+                                    <option selected value="<?php echo $srow['domain_field']; ?>">
+                                        <?php echo $srow['domain_field']; ?>
+                                    </option>
+                                    <?php
+                                    $q = "Select * from course_field";
+                                    $r = mysqli_query($con, $q);
+                                    while ($row = mysqli_fetch_array($r)) { ?>
+                                        <option value="<?php echo $row['field_name']; ?>">
+                                            <?php echo $row['field_name']; ?>
+                                        </option>
+                                    <?php
+                                    }
+                                    ?>
+                                </select>
+                            </div>
+                            <div class="input">
+                                <label class="label__text">Domain Name:</label>
+                                <input value="<?php echo $srow['domain_name']; ?>" type="text" class="input__box" name="d_name" required>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
                     <div class="input input__btn">
-                        <input type="submit" value="Add Field" class="btn" name="add_field">
+                        <input type="submit" value="Edit Domain" class="btn" name="edit_domain">
                     </div>
                 </form>
                 <?php
-                if (isset($_POST['add_field'])) {
+                if (isset($_POST['edit_domain'])) {
                     $fieldName = mysqli_real_escape_string($con, $_POST['f_name']);
+                    $domainName = mysqli_real_escape_string($con, $_POST['d_name']);
 
-                    $sin = "INSERT INTO `course_field` (`field_name`) VALUES ('$fieldName')";
+                    $sin = "UPDATE `course_domain` SET `domain_field` = '$fieldName',`domain_name` = '$domainName'";
                     $run = mysqli_query($con, $sin);
                     if ($run) {
-                        echo '<p class="form_success_msg"><b>Added Successfully</b></p>';
+                        echo ("<p style='margin-top:2rem;font-size:1.8rem;'>Updated Successfully</p>");
                     } else {
-                        echo '<p class="form_error_msg"><b>Opps! Not Added</b></p>';
+                        echo ("<script>location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>");
                     }
                 }
                 ?>
-            </div>
-
-            <div class="view__container">
-                <h3 class="heading-3">View Course Fields</h3>
-                <div class="table__container">
-                    <table class="table">
-                        <thead>
-                            <th>Sr. No.</th>
-                            <th>Field ID</th>
-                            <th>Field Name</th>
-                            <th>Added On</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $q1 = "Select * from course_field";
-                            $r1 = mysqli_query($con, $q1);
-                            $count = 1;
-                            while ($row1 = mysqli_fetch_array($r1)) { ?>
-                            <tr>
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row1['field_id']; ?></td>
-                                <td><?php echo $row1['field_name']; ?></td>
-                                <td><?php echo $row1['added_on']; ?></td>
-                                <td style="text-align: center;font-size:1.8rem;">
-                                    <a href="course-fields-edit.php?fid=<?php echo $row1['field_id']; ?>">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </td>
-                                <td style="text-align: center;font-size:1.8rem;">
-                                    <a onclick="return confirm('Are you sure you want to delete this item?');"
-                                        href="course-fields-delete.php?fid=<?php echo $row1['field_id']; ?>">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                                $count++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </main>
     </div>

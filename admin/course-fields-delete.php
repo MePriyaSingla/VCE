@@ -70,9 +70,14 @@ include "../connection.php";
                 </a>
             </ul>
         </section>
-        <main class="main__content" style="text-align: center;">
-            <h1>Welcome to Admin Panel</h1>
-            <img src="../img/admin-panel.png" alt="Admin Panel">
+        <main class="main__content">
+            <?php
+            $dq = "DELETE FROM `course_field` WHERE `field_id` = '" . $_GET['fid'] . "'";
+            $dr = mysqli_query($con, $dq);
+            if ($dr) {
+                header('location: course-fields.php');
+            }
+            ?>
         </main>
     </div>
 </body>

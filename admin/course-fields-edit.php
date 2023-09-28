@@ -72,73 +72,39 @@ include "../connection.php";
         </section>
         <main class="main__content">
             <div class="login-container-2">
-                <form action="<?php echo htmlspecialchars($_SERVER['PHP_SELF']) ?>" method="post" class="login__form">
-                    <h3 class="heading-3">Add Course Field</h3>
-                    <div class="input">
-                        <label class="label__text">Field Name:</label>
-                        <input type="text" class="input__box" name="f_name" required>
-                    </div>
+                <form action="<?php echo htmlspecialchars($_SERVER['REQUEST_URI']) ?>" method="post" class="login__form">
+                    <h3 class="heading-3">Edit Course Field</h3>
+                    <?php
+                    $sq = "SELECT * FROM `course_field` WHERE `field_id` = '" . $_GET['fid'] . "'";
+                    $sr = mysqli_query($con, $sq);
+                    if (mysqli_num_rows($sr) > 0) {
+                        while ($srow = mysqli_fetch_array($sr)) {
+                    ?>
+                            <div class="input">
+                                <label class="label__text">Field Name:</label>
+                                <input type="text" value="<?php echo $srow['field_name']; ?>" class="input__box" name="f_name" required>
+                            </div>
+                    <?php
+                        }
+                    }
+                    ?>
                     <div class="input input__btn">
-                        <input type="submit" value="Add Field" class="btn" name="add_field">
+                        <input type="submit" value="Edit Field" class="btn" name="edit_field">
                     </div>
                 </form>
                 <?php
-                if (isset($_POST['add_field'])) {
+                if (isset($_POST['edit_field'])) {
                     $fieldName = mysqli_real_escape_string($con, $_POST['f_name']);
 
-                    $sin = "INSERT INTO `course_field` (`field_name`) VALUES ('$fieldName')";
+                    $sin = "UPDATE `course_field` SET `field_name` = '$fieldName' WHERE `field_id` = '" . $_GET['fid'] . "'";
                     $run = mysqli_query($con, $sin);
                     if ($run) {
-                        echo '<p class="form_success_msg"><b>Added Successfully</b></p>';
+                        echo ("<p style='margin-top:2rem;font-size:1.8rem;'>Updated Successfully</p>");
                     } else {
-                        echo '<p class="form_error_msg"><b>Opps! Not Added</b></p>';
+                        echo ("<script>location.href = '" . $_SERVER['REQUEST_URI'] . "';</script>");
                     }
                 }
                 ?>
-            </div>
-
-            <div class="view__container">
-                <h3 class="heading-3">View Course Fields</h3>
-                <div class="table__container">
-                    <table class="table">
-                        <thead>
-                            <th>Sr. No.</th>
-                            <th>Field ID</th>
-                            <th>Field Name</th>
-                            <th>Added On</th>
-                            <th>Edit</th>
-                            <th>Delete</th>
-                        </thead>
-                        <tbody>
-                            <?php
-                            $q1 = "Select * from course_field";
-                            $r1 = mysqli_query($con, $q1);
-                            $count = 1;
-                            while ($row1 = mysqli_fetch_array($r1)) { ?>
-                            <tr>
-                                <td><?php echo $count; ?></td>
-                                <td><?php echo $row1['field_id']; ?></td>
-                                <td><?php echo $row1['field_name']; ?></td>
-                                <td><?php echo $row1['added_on']; ?></td>
-                                <td style="text-align: center;font-size:1.8rem;">
-                                    <a href="course-fields-edit.php?fid=<?php echo $row1['field_id']; ?>">
-                                        <i class="bi bi-pencil-square"></i>
-                                    </a>
-                                </td>
-                                <td style="text-align: center;font-size:1.8rem;">
-                                    <a onclick="return confirm('Are you sure you want to delete this item?');"
-                                        href="course-fields-delete.php?fid=<?php echo $row1['field_id']; ?>">
-                                        <i class="bi bi-trash"></i>
-                                    </a>
-                                </td>
-                            </tr>
-                            <?php
-                                $count++;
-                            }
-                            ?>
-                        </tbody>
-                    </table>
-                </div>
             </div>
         </main>
     </div>

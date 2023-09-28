@@ -177,6 +177,8 @@ include "../connection.php";
                             <th>Course Link</th>
                             <th>Course Duration</th>
                             <th>Added On</th>
+                            <th>Edit</th>
+                            <th>Delete</th>
                         </thead>
                         <tbody>
                             <?php
@@ -200,6 +202,16 @@ include "../connection.php";
                                     </td>
                                     <td><?php echo $row1['course_duration']; ?></td>
                                     <td><?php echo $row1['added_on']; ?></td>
+                                    <td style="text-align: center;font-size:1.8rem;">
+                                        <a href="courses-edit.php?cid=<?php echo $row1['course_id']; ?>">
+                                            <i class="bi bi-pencil-square"></i>
+                                        </a>
+                                    </td>
+                                    <td style="text-align: center;font-size:1.8rem;">
+                                        <a onclick="return confirm('Are you sure you want to delete this item?');" href="courses-delete.php?cid=<?php echo $row1['course_id']; ?>">
+                                            <i class="bi bi-trash"></i>
+                                        </a>
+                                    </td>
                                 </tr>
                             <?php
                                 $count++;
