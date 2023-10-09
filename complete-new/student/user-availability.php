@@ -102,8 +102,8 @@ include "connection.php";
                             if (mysqli_num_rows($campQuery) > 0) {
                                 while ($campRow = mysqli_fetch_array($campQuery)) {
                             ?>
-                            <option value="<?php echo $campRow['campus_name'] ?>"><?php echo $campRow['campus_name'] ?>
-                            </option>
+                                    <option value="<?php echo $campRow['campus_name'] ?>"><?php echo $campRow['campus_name'] ?>
+                                    </option>
 
                             <?php
                                 }
@@ -183,77 +183,74 @@ include "connection.php";
                                             while ($rowA = mysqli_fetch_array($queryA)) {
                                 ?>
 
-                                <tr>
-                                    <td>
-                                        <?php echo $count; ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowA['user_firstname'] . " " . $rowA['user_lastname']; ?>
-                                        <?php
+                                                <tr>
+                                                    <td>
+                                                        <?php echo $count; ?>
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $rowA['user_firstname'] . " " . $rowA['user_lastname']; ?>
+                                                        <?php
                                                         if ($rowQ['user_id'] == $_SESSION['userIdVce']) {
                                                             echo "(Yourself)";
                                                         }
                                                         ?>
-                                    </td>
-                                    <td>
-                                        <?php echo $rowQ['campus_name']; ?>
-                                    </td>
-                                    <td style="line-height:2;">
-                                        <p>Date:
-                                            <span style="font-weight:600;">
-                                                <?php echo $rowQ['availability_date']; ?>
-                                            </span>
-                                        </p>
-                                        <p>Availability:
-                                            <?php
+                                                    </td>
+                                                    <td>
+                                                        <?php echo $rowQ['campus_name']; ?>
+                                                    </td>
+                                                    <td style="line-height:2;">
+                                                        <p>Date:
+                                                            <span style="font-weight:600;">
+                                                                <?php echo $rowQ['availability_date']; ?>
+                                                            </span>
+                                                        </p>
+                                                        <p>Availability:
+                                                            <?php
                                                             if ($rowQ['availability'] == 'Available') { ?>
-                                            <span style="font-weight:700;color:#295;">
-                                                <?php echo $rowQ['availability']; ?>
-                                            </span>
-                                            <?php
+                                                                <span style="font-weight:700;color:#295;">
+                                                                    <?php echo $rowQ['availability']; ?>
+                                                                </span>
+                                                            <?php
                                                             } else { ?>
-                                            <span style="font-weight:700;color:#922;">
-                                                <?php echo $rowQ['availability']; ?>
-                                            </span>
-                                            <?php
+                                                                <span style="font-weight:700;color:#922;">
+                                                                    <?php echo $rowQ['availability']; ?>
+                                                                </span>
+                                                            <?php
                                                             }
                                                             ?>
-                                        </p>
-                                        <?php
+                                                        </p>
+                                                        <?php
                                                         if ($rowQ['availability'] == 'Available') { ?>
-                                        <p>Time:
-                                            <span style="font-weight:500;"><?php echo $rowQ['time_from']; ?> to
-                                                <?php echo $rowQ['time_to']; ?></span>
-                                        </p>
-                                        <?php }
+                                                            <p>Time:
+                                                                <span style="font-weight:500;"><?php echo $rowQ['time_from']; ?> to
+                                                                    <?php echo $rowQ['time_to']; ?></span>
+                                                            </p>
+                                                        <?php }
                                                         ?>
 
-                                    </td>
-                                    <td>
-                                        <?php
+                                                    </td>
+                                                    <td>
+                                                        <?php
                                                         if ($rowQ['user_id'] == $_SESSION['userIdVce']) { ?>
 
-                                        <a href="edit-availability.php?aid=<?php echo $rowQ['availability_id']; ?>"
-                                            class="edit-btn">
-                                            <i class="bi bi-pencil-square"></i>
-                                        </a>
-                                        <?php
+                                                            <a href="edit-availability.php?aid=<?php echo $rowQ['availability_id']; ?>" class="edit-btn">
+                                                                <i class="bi bi-pencil-square"></i>
+                                                            </a>
+                                                        <?php
                                                         }
                                                         ?>
-                                    </td>
-                                    <td>
-                                        <?php
+                                                    </td>
+                                                    <td>
+                                                        <?php
                                                         if ($rowQ['user_id'] == $_SESSION['userIdVce']) { ?>
-                                        <a onclick="return confirm('Are you sure you want to delete this item?');"
-                                            href="remove-availability.php?aid=<?php echo $rowQ['availability_id']; ?>"
-                                            class="remove-btn">
-                                            <i class="bi bi-trash"></i>
-                                        </a>
-                                        <?php
+                                                            <a onclick="return confirm('Are you sure you want to delete this item?');" href="remove-availability.php?aid=<?php echo $rowQ['availability_id']; ?>" class="remove-btn">
+                                                                <i class="bi bi-trash"></i>
+                                                            </a>
+                                                        <?php
                                                         }
                                                         ?>
-                                    </td>
-                                </tr>
+                                                    </td>
+                                                </tr>
                                 <?php
                                                 $count++;
                                             }
