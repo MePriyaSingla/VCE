@@ -1,0 +1,134 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --color-primary: #3aafa9;
+  --color-primary-dark: #2b7a78;
+  --color-primary-light: #def2f1;
+  --color-secondary: #17252a;
+  --color-secondary-dark: #101a1d;
+  --color-secondary-light: #377084;
+  --color-grey-light-1: #999;
+  --color-grey-light-2: #ccc;
+  --color-grey-light-3: #eee;
+  --color-grey-dark-1: #242424;
+  --color-grey-dark-2: #333;
+  --color-grey-dark-3: #474747;
+  --color-white: #fff;
+  --font-default: "Open Sans", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--color-grey-dark-2);
+  font-family: var(--font-default);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns:
+    [full-start] minmax(min-content, 8rem)
+    [center-start] repeat(2, [col-start] 1fr [col-end])
+    [center-end] minmax(min-content, 8rem)
+    [full-end];
+  align-items: center;
+  justify-items: center;
+}
+
+.login-container-1 {
+  grid-column: 2 / 3;
+}
+
+.login-container-2 {
+  grid-column: 3 / 4;
+}
+
+.login__img {
+  width: 100%;
+}
+
+.login__form {
+  display: grid;
+  grid-template-columns: 1fr;
+}
+
+.heading-3 {
+  font-size: 4rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 0.5rem;
+  justify-self: center;
+}
+
+.heading-4 {
+  font-size: 1.8rem;
+  font-weight: 400;
+  color: var(--color-grey-light-1);
+  margin-bottom: 4rem;
+  justify-self: center;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.label__text {
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--color-secondary);
+}
+
+.input__box {
+  padding: 1rem;
+  border: 2px solid var(--color-grey-light-2);
+  border-radius: 5px;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  box-shadow: 0px 0.2rem 3rem 0.2rem rgba(156, 156, 156, 0.2);
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.input__box:focus {
+  outline: none;
+  border: 2px solid var(--color-primary);
+}
+
+.btn {
+  padding: 1rem;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary-dark);
+  color: var(--color-grey-light-3);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.incorrect {
+  margin-top: 1rem;
+  font-size: 1.2rem;
+  font-weight: 400;
+  color: rgb(167, 24, 24);
+}

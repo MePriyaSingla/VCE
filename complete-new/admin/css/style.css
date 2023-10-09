@@ -1,0 +1,242 @@
+@import url("https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;500;600;700&display=swap");
+
+:root {
+  --color-primary: #3aafa9;
+  --color-primary-dark: #2b7a78;
+  --color-primary-light: #def2f1;
+  --color-secondary: #17252a;
+  --color-secondary-dark: #101a1d;
+  --color-secondary-light: #377084;
+  --color-grey-light-1: #999;
+  --color-grey-light-2: #ccc;
+  --color-grey-light-3: #eee;
+  --color-grey-dark-1: #242424;
+  --color-grey-dark-2: #333;
+  --color-grey-dark-3: #474747;
+  --color-white: #fff;
+  --font-default: "Open Sans", sans-serif;
+}
+
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: inherit;
+}
+
+html {
+  font-size: 62.5%;
+  box-sizing: border-box;
+}
+
+body {
+  color: var(--color-grey-dark-2);
+  font-family: var(--font-default);
+}
+
+::selection {
+  background-color: var(--color-primary);
+  color: #fff;
+}
+
+.container {
+  height: 100vh;
+  display: grid;
+  grid-template-columns: 33rem 1fr;
+  grid-template-rows: 8rem calc(100vh - 8rem);
+  /* align-items: center; */
+  /* justify-items: center; */
+}
+
+.header {
+  grid-column: 1 / -1;
+  background-color: var(--color-primary);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 2rem;
+}
+
+.header__left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.admin__header-user {
+  width: 5rem;
+}
+
+.header__admin-name {
+  font-size: 1.6rem;
+  color: var(--color-grey-light-3);
+  font-weight: 500;
+}
+
+.header__admin-logout:link,
+.header__admin-logout:visited {
+  font-size: 1.8rem;
+  color: var(--color-secondary);
+  background-color: rgba(255, 255, 255, 0.1);
+  text-decoration: none;
+  text-transform: capitalize;
+  font-weight: 500;
+  padding: 1rem 2rem;
+  transition: all 0.2s;
+}
+
+.header__admin-logout:hover,
+.header__admin-logout:active {
+  color: var(--color-white);
+  background-color: rgba(255, 255, 255, 0.15);
+}
+
+.sidebar {
+  background-color: var(--color-secondary);
+  overflow-y: scroll;
+  padding-top: 1.5rem;
+  scroll-behavior: smooth;
+}
+
+.sidebar__item {
+  padding: 2rem;
+  background-color: rgba(255, 255, 255, 0.01);
+  margin-bottom: 1.5rem;
+  display: flex;
+  gap: 1.5rem;
+  transition: all 0.2s;
+}
+
+.sidebar__item:hover {
+  background-color: var(--color-primary);
+  gap: 1.8rem;
+}
+
+.sidebar__item-link:link,
+.sidebar__item-link:visited {
+  color: var(--color-white);
+  text-decoration: none;
+  font-size: 1.8rem;
+}
+
+.main__content {
+  background-color: var(--color-grey-light-3);
+  padding: 8rem 5rem;
+  overflow-y: scroll;
+  scroll-behavior: smooth;
+}
+
+.login__form {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  grid-column-gap: 2rem;
+}
+
+.heading-3 {
+  font-size: 3rem;
+  font-weight: 600;
+  color: var(--color-primary);
+  margin-bottom: 2rem;
+  grid-column: 1 / -1;
+}
+
+.input__btn {
+  grid-column: 1 / -1;
+}
+
+.input {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.label__text {
+  font-size: 1.7rem;
+  font-weight: 400;
+  color: var(--color-secondary);
+}
+
+.input__box {
+  padding: 1rem;
+  border: 2px solid var(--color-grey-light-2);
+  border-radius: 5px;
+  background-color: var(--color-white);
+  color: var(--color-primary);
+  box-shadow: 0px 0.2rem 3rem 0.2rem rgba(156, 156, 156, 0.2);
+  font-size: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+.input__box:focus {
+  outline: none;
+  border: 2px solid var(--color-primary);
+}
+
+.btn {
+  padding: 1rem;
+  font-size: 1.8rem;
+  text-transform: uppercase;
+  font-weight: 500;
+  margin-top: 1.5rem;
+  background-color: var(--color-primary);
+  border: 2px solid var(--color-primary-dark);
+  color: var(--color-grey-light-3);
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.form_success_msg {
+  font-size: 1.5rem;
+  color: #050;
+  margin-top: 1rem;
+}
+
+.form_error_msg {
+  font-size: 1.5rem;
+  color: #500;
+  margin-top: 1rem;
+}
+
+.view__container {
+  margin-top: 8rem;
+}
+
+.table {
+  border-collapse: collapse;
+  font-size: 1.6rem;
+  width: 100%;
+}
+
+th,
+td {
+  border: 1px solid #000;
+  padding: 1rem;
+}
+
+.total__users,
+.user__interest,
+.discussion__groups,
+.enrolled__courses,
+.finished__courses {
+  background-color: var(--color-white);
+  padding: 3rem;
+  margin-bottom: 4rem;
+}
+
+.total__users h3,
+.user__interest h3,
+.discussion__groups h3,
+.enrolled__courses h3,
+.finished__courses h3 {
+  font-size: 2rem;
+}
+
+.total__users p,
+.user__interest p,
+.discussion__groups p,
+.enrolled__courses p,
+.finished__courses p {
+  font-size: 1.8rem;
+  margin-top: 2rem;
+}
